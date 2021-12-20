@@ -1,6 +1,5 @@
 # Load colors
 autoload -U colors && colors
-PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
 
 # Disable CTRL-s from freezing your terminal's output.
 stty stop undef
@@ -21,6 +20,21 @@ setopt HIST_REDUCE_BLANKS    # Remove unnecessary blank lines.
 # Load aliases if they exist.
 [ -f "${XDG_CONFIG_HOME}/zsh/.aliases" ] && . "${XDG_CONFIG_HOME}/zsh/.aliases"
 [ -f "${XDG_CONFIG_HOME}/zsh/.aliases.local" ] && . "${XDG_CONFIG_HOME}/zsh/.aliases.local"
+
+# Prompt. Using single quotes around the PROMPT is very important, otherwise
+# the git branch will always be empty. Using single quotes delays the
+# evaluation of the prompt. Also PROMPT is an alias to PS1.
+git_prompt() {
+    local branch="$(git symbolic-ref HEAD 2> /dev/null | cut -d'/' -f3)"
+    local branch_truncated="${branch:0:30}"
+    if (( ${#branch} > ${#branch_truncated} )); then
+        branch="${branch_truncated}..."
+    fi
+
+    [ -n "${branch}" ] && echo " (${branch})"
+}
+setopt PROMPT_SUBST
+PROMPT='%B%{$fg[green]%}%n@%{$fg[green]%}%M %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 
 # Use modern completion system. Other than enabling globdots for showing
 # hidden files, these ares values in the default generated zsh config.
@@ -58,3 +72,6 @@ bindkey '\e[3~' delete-char
 # Configure FZF.
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS="--color=dark"
+
+# Turn off the damn beep
+unsetopt BEEP
