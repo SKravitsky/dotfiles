@@ -1,0 +1,40 @@
+
+# Setup colors on zsh OSX vs linux
+if command -v brew > /dev/null 2>&1; then
+    alias ls="ls -G"
+    alias grep="grep -G"
+    alias fgrep="fgrep -G"
+    alias egrep="egrep -G"
+else
+    alias ls="ls --color=auto"
+    alias grep="grep --color=auto"
+    alias fgrep="fgrep --color=auto"
+    alias egrep="egrep --color=auto"
+fi
+
+# LS Aliases
+alias lh="ls -h --color=auto"
+alias la="ls -al"
+alias sl="ls -CF"
+alias l="ls -CF"
+alias a="ls -CF"
+
+#Grep Aliases
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias grep="grep --color=auto"
+alias h="history | grep "
+
+#Navigation Aliases
+alias back="cd $OLDPWD"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+#Kubernetes Aliases
+alias k="kubectl"
+
+#Git
+alias gl="ssh-add ~/.ssh/github"
+git config --global user.name "SKravitsky"

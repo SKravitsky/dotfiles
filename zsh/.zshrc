@@ -34,6 +34,10 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 
+# dircolors is a GNU utility that's not on macOS by default. With this not
+# being used on macOS it means zsh's complete menu won't have colors.
+command -v dircolors > /dev/null 2>&1 && eval "$(dircolors -b)"
+
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -41,8 +45,6 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
-
-alias ls="ls --color=auto"
 
 # Ensure home / end keys continue to work.
 bindkey '\e[1~' beginning-of-line
