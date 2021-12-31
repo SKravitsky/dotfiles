@@ -12,6 +12,7 @@ export HISTFILE="${XDG_CACHE_HOME}/zsh/.history"
 export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 export HISTFILESIZE=20000
 export HISTSIZE=10000
+export SAVEHIST=10000
 setopt INC_APPEND_HISTORY    # Immediately append commands to history file.
 setopt HIST_IGNORE_ALL_DUPS  # Never add duplicate entries.
 setopt HIST_IGNORE_SPACE     # Ignore commands that start with a space.
